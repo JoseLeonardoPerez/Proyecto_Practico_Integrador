@@ -29,7 +29,9 @@ public class CursoService {
     }
 
     public Optional<Curso> obtenerPorId(Long id) {
-        return cursoRepository.findById(id);
+        Optional<Curso> curso = cursoRepository.findById(id);
+        System.out.println("Curso encontrado: " + curso); // Agregar esta línea para depuración
+        return curso;
     }
 
     public Curso guardar(Curso curso) {

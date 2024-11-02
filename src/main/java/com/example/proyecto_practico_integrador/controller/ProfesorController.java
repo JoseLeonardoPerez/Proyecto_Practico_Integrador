@@ -52,7 +52,17 @@ public class ProfesorController {
 
 
     @DeleteMapping("/{id}")
-    public void eliminar(@PathVariable Long id) {
+    /*public void eliminar(@PathVariable Long id) {
         profesorService.eliminar(id);
+    }*/
+    public ResponseEntity<Void> eliminar(@PathVariable Long id) {
+        Optional<Profesor> profesorExistente = profesorService.obtenerPorId(id);
+
+        if (profesorExistente.isPresent()) {
+            profesorService.eliminar(id);
+            return ResponseEntity.noContent().build(); // 204 No Content
+        } else {
+            return ResponseEntity.notFound().build(); // 404 Not Found
+        }
     }
 }

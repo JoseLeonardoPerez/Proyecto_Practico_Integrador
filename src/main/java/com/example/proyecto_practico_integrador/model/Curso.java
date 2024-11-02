@@ -22,9 +22,10 @@ public class Curso {
     private int duracion;
 
     public void setId(Long id) {
+            this.id = id;
     }
 
     public Curso() {
     }
-    // Getters y Setters
+
 }
