@@ -1,6 +1,6 @@
 package com.example.proyecto_practico_integrador.controller;
 
-
+import org.springframework.security.access.prepost.PreAuthorize;
 import com.example.proyecto_practico_integrador.DTOs.CursoOutputDTO;
 import com.example.proyecto_practico_integrador.DTOs.CursoinputDTO;
 import com.example.proyecto_practico_integrador.mappers.CursoMapper;
@@ -45,14 +45,8 @@ public class CursoController {
     public Optional<Curso> obtenerPorId(@PathVariable Long id) {
         return cursoService.obtenerPorId(id);
     }
-    /*public ResponseEntity<CursoOutputDTO> obtenerPorId(@PathVariable Long id) {
-        Curso curso = cursoService.obtenerPorId(id)
-                .orElseThrow(() -> new NotFoundException("Curso no encontrado"));
 
-        CursoOutputDTO cursoOutputDTO = CursoMapper.crearAPartirDe(curso);
-        return ResponseEntity.ok(cursoOutputDTO);
-    }*/
-
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     @PostMapping
     public ResponseEntity<CursoOutputDTO> crear(@RequestBody CursoinputDTO cursoInputDTO) {
         if (cursoInputDTO.getProfesorId() == null) {
@@ -74,30 +68,11 @@ public class CursoController {
         CursoOutputDTO cursoOutputDTO = CursoMapper.crearAPartirDe(cursoGuardado);
         return ResponseEntity.status(HttpStatus.CREATED).body(cursoOutputDTO);
     }
-    /*public Curso crear(@RequestBody Curso curso) {
-        return cursoService.guardar(curso);
-    }*/
 
-    /*@PutMapping("/{id}")
-    public Curso actualizar(@PathVariable Long id, @RequestBody Curso curso) {
-        curso.setId(id);
-        return cursoService.guardar(curso);
-    }*/
+
+
     @PutMapping("/{id}")
-   /* public ResponseEntity<Curso> actualizar(@PathVariable Long id, @RequestBody Curso curso) {
-        Optional<Curso> cursoExistente = cursoService.obtenerPorId(id);
 
-        if (cursoExistente.isPresent()) {
-            curso.setId(id); // Establece el ID del curso
-            Curso cursoActualizado = cursoService.guardar(curso);
-            //System.out.println("Curso actualizado: " + cursoActualizado);
-           // return ResponseEntity.ok(cursoService.guardar(curso)); // Actualiza el curso
-              return ResponseEntity.ok(cursoActualizado);
-
-        } else {
-            return ResponseEntity.notFound().build(); // Devuelve 404 si no existe
-        }
-    }*/
     public ResponseEntity<Curso> actualizar(@PathVariable Long id, @RequestBody CursoinputDTO cursoInputDTO) {
         Optional<Curso> cursoExistente = cursoService.obtenerPorId(id);
 

@@ -22,5 +22,5 @@ public class Profesor {
     public void setId(Long id) {
         this.id = id;
     }
-    // Getters y Setters
+
 }

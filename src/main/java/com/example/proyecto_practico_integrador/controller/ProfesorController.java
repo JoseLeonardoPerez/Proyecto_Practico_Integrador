@@ -45,16 +45,10 @@ public class ProfesorController {
             return ResponseEntity.notFound().build(); // Retornar 404 si no se encuentra
         }
     }
-    /*public Profesor actualizar(@PathVariable Long id, @RequestBody Profesor profesor) {
-        profesor.setId(id);
-        return profesorService.guardar(profesor);
-    }*/
+
 
 
     @DeleteMapping("/{id}")
-    /*public void eliminar(@PathVariable Long id) {
-        profesorService.eliminar(id);
-    }*/
     public ResponseEntity<Void> eliminar(@PathVariable Long id) {
         Optional<Profesor> profesorExistente = profesorService.obtenerPorId(id);
 
